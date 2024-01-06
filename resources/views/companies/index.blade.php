@@ -12,20 +12,38 @@
         <p style="color: green;">{{ session('success') }}</p>
     @endif
 
-    <ul>
-        @forelse ($companies as $company)
-            <li>
-                <strong>{{ $company->name }}</strong>
-                <p>Email: {{ $company->email }}</p>
-                <p>Website: {{ $company->website }}</p>
-                <img src="{{ asset($company->logo) }}" alt="{{ $company->name }} Logo" style="max-width: 100px; max-height: 100px;">
-                <br>
-                <a href="{{ route('companies.show', $company->id) }}">View Details</a>
-            </li>
-        @empty
-            <li>No companies available.</li>
-        @endforelse
-    </ul>
+    @if ($companies->count() > 0)
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Website</th>
+                    <th>Logo</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($companies as $company)
+                    <tr>
+                        <td>{{ $company->id }}</td>
+                        <td>{{ $company->name }}</td>
+                        <td>{{ $company->email }}</td>
+                        <td>{{ $company->website }}</td>
+                        <td>
+                            <img src="{{ asset($company->logo) }}" alt="{{ $company->name }} Logo" style="max-width: 100px; max-height: 100px;">
+                        </td>
+                        <td>
+                            <a href="{{ route('companies.show', $company->id) }}">View Details</a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p>No companies available.</p>
+    @endif
 
     {{ $companies->links() }}
 </body>

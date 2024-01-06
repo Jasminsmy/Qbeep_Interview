@@ -30,7 +30,7 @@ class CompanyController extends Controller
         ]);
 
         if($request->hasFile('logo')){
-            $logoPath = $request->file('logo')->store('public');
+            $logoPath = $request->file('logo')->store('public/logos');
         }
 
         Company::create([
